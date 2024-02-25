@@ -4,6 +4,25 @@ import timeit
 import matplotlib.pyplot as plt
 import numpy as np
 
+#------------Big O Func----------------
+def Logn(x, a, b):
+    return a * np.log2(x) + b
+
+def Linear(x, a, b):
+    return a * x + b
+
+def NlogN(x, a, b):
+    return a * x * np.log2(x) + b
+
+def Square(x, a, b):
+    return a * x*x  + b
+
+def N2logN(x,a,b):
+    return a*x*x*np.log2(x) + b
+
+def Cube(x,a,b):
+    return a*x*x*x + b
+
 #---------Test Case--------------------
 
 def worstTestCase(n, iterations=1):
@@ -27,27 +46,11 @@ def bestTestCase(n, iterations=1):
         times.append(time_taken)
     return times
 
-#--------------------------------------
+def UnitTest():
+    pass
 
-#------------Big O Func----------------
-def Logn(x, a, b):
-    return a * np.log2(x) + b
-
-def Linear(x, a, b):
-    return a * x + b
-
-def NlogN(x, a, b):
-    return a * x * np.log2(x) + b
-
-def Square(x, a, b):
-    return a * x*x  + b
-
-def N2logN(x,a,b):
-    return a*x*x*np.log2(x) + b
-
-def Cube(x,a,b):
-    return a*x*x*x + b
-#--------------------------------------
+def RandomTest():
+    pass
 
 def PerformanceTest(maxValue,sampleAmount,testCase):
     nodeCounts = np.linspace(2, maxValue, 50)

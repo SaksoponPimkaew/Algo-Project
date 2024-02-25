@@ -14,6 +14,14 @@ def recieveInput():
         'startNode':startNode,
         'edges':edges
     }
+
+# Minimum Except Node 2
+# Node Count from 0 - (N-1)
+# Edge Tuple (Start_Node,End_Node,Weight)
+# Node_Count< Edges_Length < Node_Count^2
+# Edge must not connect same node Ex 0-1 1-0
+# Graph must be fully connect
+# Weight > 0
 def findAtLeastCost(nodeCount:int,startNode:int,edges:list[tuple[int,int,int]]):
     edgeLen = len(edges)
     pq:PriorityQueue[tuple[int,int,int]] = PriorityQueue()
@@ -46,6 +54,7 @@ def findAtLeastCost(nodeCount:int,startNode:int,edges:list[tuple[int,int,int]]):
     #Find result
     result = [edges[i][2] for i in range(edgeLen)if not edgeTraverse[i]]
     return max(result) if len(result)>0 else 0
+
 if __name__ == '__main__':
     inp = recieveInput()
     print('result :',findAtLeastCost(inp['nodeCount'],inp['startNode'],inp['edges']))
