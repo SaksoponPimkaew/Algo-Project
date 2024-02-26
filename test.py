@@ -1,3 +1,4 @@
+import unittest
 from index import findAtLeastCost
 from scipy.optimize import curve_fit
 import timeit
@@ -46,8 +47,85 @@ def bestTestCase(n, iterations=1):
         times.append(time_taken)
     return times
 
-def UnitTest():
-    pass
+class TestFindAtLeastCost(unittest.TestCase):
+
+    def test_empty_graph(self):
+        node_count = 0
+        start_node = 0
+        edges = []
+        result = findAtLeastCost(node_count, start_node, edges)
+        self.assertEqual(result, 0)
+
+    def test_single_node_graph(self):
+        node_count = 1
+        start_node = 0
+        edges = []
+        result = findAtLeastCost(node_count, start_node, edges)
+        self.assertEqual(result, 0)
+
+    def test_fully_connected_graph(self):
+        node_count = 3
+        start_node = 0
+        edges = [
+            (0, 1, 1),
+            (0, 2, 2),
+            (1, 2, 3)
+        ]
+        result = findAtLeastCost(node_count, start_node, edges)
+        self.assertEqual(result, 2)  # Maximum non-traversed edge weight
+
+    def test_disconnected_graph(self):
+        node_count = 3
+        start_node = 0
+        edges = [
+            (0, 1, 1),
+            (2, 2, 3)  # Isolated node
+        ]
+        with self.assertRaises(Exception):  # Expect an error (e.g., disconnected graph)
+            findAtLeastCost(node_count, start_node, edges)
+
+    def test_invalid_node_count(self):
+        node_count = -1
+        start_node = 0
+        edges = []
+        with self.assertRaises(ValueError):  # Expect an error
+            findAtLeastCost(node_count, start_node, edges)
+
+    def test_zero_node_count(self):
+        node_count = 0
+        start_node = 0
+        edges = [(1, 2, 1)]  # Invalid edge (node does not exist)
+        with self.assertRaises(ValueError):  # Expect an error
+            findAtLeastCost(node_count, start_node, edges)
+
+    def test_invalid_edge_count(self):
+        node_count = 2
+        start_node = 0
+        edges = [(0, 1, 1), (0, 1, 2)]  # Duplicate edge
+        with self.assertRaises(ValueError):  # Expect an error
+            findAtLeastCost(node_count, start_node, edges)
+
+    def test_zero_weight_edge(self):
+        node_count = 3
+        start_node = 0
+        edges = [
+            (0, 1, 0),  # Zero weight edge
+            (0, 2, 1),
+            (1, 2, 3)
+        ]
+        with self.assertRaises(ValueError):  # Expect an error
+            findAtLeastCost(node_count, start_node, edges)
+
+    def test_negative_weight_edge(self):
+        node_count = 3
+        start_node = 0
+        edges = [
+            (0, 1, -1),  # Negative weight edge
+            (0, 2, 1),
+            (1, 2, 3)
+        ]
+        with self.assertRaises(ValueError):  # Expect an error
+            findAtLeastCost(node_count, start_node, edges)
 
 def RandomTest():
     pass
